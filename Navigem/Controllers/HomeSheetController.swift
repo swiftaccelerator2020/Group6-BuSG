@@ -7,13 +7,18 @@
 
 import UIKit
 
-class HomeSheetController: SheetController {
+class HomeSheetController: SheetController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
+        searchBar.delegate = self
         headerView.searchBar = searchBar
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

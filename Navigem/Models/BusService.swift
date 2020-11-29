@@ -54,4 +54,8 @@ struct BusService {
     
     /// Bus stop code for last bus stop (similar as first stop for loop services). Sample: `"64009"`
     let destinationCode: BusStopCode
+    
+//    static func from(json: String) {
+//        
+//    }
 }

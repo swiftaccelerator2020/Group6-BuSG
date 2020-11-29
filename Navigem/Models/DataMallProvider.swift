@@ -8,28 +8,35 @@
 import Foundation
 
 class DataMallProvider {
+    
+    static func handleClientError(_ error: Error) {
+        fatalError("CLIENT_ERROR")
+    }
+    
+    static func handleServerError(_ response: URLResponse?) {
+        fatalError("SERVER_ERROR")
+    }
+    
     static func getBusStop() throws {
         var request = URLRequest(url: URL(string: K.apiUrl.busArrival, with: [
             URLQueryItem(name: "BusStopCode", value: "10079")
         ])!)
-        guard let apiKey = ProcessInfo.processInfo.environment[K.datamallEnvVar] else {
+        guard let apiKey = ProcessInfo.processInfo.environment[K.dataMallEnvVar] else {
             throw ApiKeyError.missing
         }
         request.setValue(apiKey, forHTTPHeaderField: "AccountKey")
-        print(request.allHTTPHeaderFields)
+
         let task = URLSession.shared.dataTask(with: request) { (data, res, err) in
             if let err = err {
-                //self.handleClientError(error)
-                print("client error")
+                self.handleClientError(err)
                 return
             }
-
             guard let httpResponse = res as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                //self.handleServerError(response)
+                self.handleServerError(res)
                 return
             }
-            if let mimeType = httpResponse.mimeType, mimeType == "application/json",
+            if let mimeType = httpResponse.mimeType, mimeType == K.dataMallMimeType,
                let data = data,
                let string = String(data: data, encoding: .utf8) {
                 print(string)

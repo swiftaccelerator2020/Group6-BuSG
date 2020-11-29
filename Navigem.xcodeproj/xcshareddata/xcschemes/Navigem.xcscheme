@@ -72,7 +72,7 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "datamall_api_key"
+            key = "data_mall_api_key"
             value = "PH6IauvsShyiUOpSgWP4/A=="
             isEnabled = "YES">
          </EnvironmentVariable>
